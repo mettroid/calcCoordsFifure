@@ -1,9 +1,6 @@
 import './index.html';
 import './index.scss';
 
-//import './modules/mouseover.mjs';
-//import './modules/mouseout.mjs';
-//import './modules/mouseclick.mjs';
 import * as Canvas from './modules/canvas.mjs';
 
 Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
