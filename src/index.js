@@ -8,7 +8,33 @@ import * as Canvas from './modules/canvas.mjs';
 
 Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
 
+const mainField = document.querySelector('#mainField');
+let currentItem = null;
+mainField.addEventListener('mouseover', {
+	handleEvent(e){
+		
+		if(currentItem) return;
+		let item = e.target.closest('li.list__item');
+		if(!item) return;
+		
+		item.classList.add('list__item_pick');
+		currentItem = item;
 
+	}
+}, {capture: false});
+mainField.addEventListener('mouseout', {
+	handleEvent(e){
+		if(!currentItem) return;
+
+		let related = e.relatedTarget;
+		while(related){
+			if(related === currentItem) return;
+			related = related.parentNode;
+		}
+		currentItem.classList.remove('list__item_pick');
+		currentItem = null;
+	}
+}, {capture: false});
 
 
 
