@@ -1,0 +1,7 @@
+.list__item { //li
+	margin: 3px;
+	border: 1px solid black;
+	padding: 5px;
+	cursor: pointer;
+	transition: background 100ms linear, transform 100ms linear; 
+}
