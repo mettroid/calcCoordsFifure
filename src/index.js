@@ -3,7 +3,7 @@ import './index.scss';
 
 import * as Canvas from './modules/canvas.mjs';
 
-Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
+const canvasProperty = Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
 
 const mainField = document.querySelector('#mainField');
 let currentPickedItem = null;

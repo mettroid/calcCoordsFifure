@@ -7,9 +7,9 @@ const create = function(parent, id, classStyle, classPosition, width, height){
     canvas.id = id;
     canvas.classList.add(classStyle, classPosition);
      
-    canvasProperty.ctx = canvas.getContext('2d');
-    canvasProperty.id = id;
+    return {
+        ctx: canvas.getContext('2d'),
+        id
+    }
 }
-const canvasProperty = {}
-
-export {create, canvasProperty}
+export {create}
