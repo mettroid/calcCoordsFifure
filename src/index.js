@@ -6,33 +6,49 @@ import * as Canvas from './modules/canvas.mjs';
 Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
 
 const mainField = document.querySelector('#mainField');
-let currentItem = null;
+let currentPickedItem = null;
+let currentActiveItem = null;
 mainField.addEventListener('mouseover', {
 	handleEvent(e){
 		
-		if(currentItem) return;
+		if(currentPickedItem) return;
 		let item = e.target.closest('li.list__item');
 		if(!item) return;
 		
 		item.classList.add('list__item_pick');
-		currentItem = item;
+		currentPickedItem = item;
 
 	}
 }, {capture: false});
 mainField.addEventListener('mouseout', {
 	handleEvent(e){
-		if(!currentItem) return;
+		if(!currentPickedItem) return;
 
 		let related = e.relatedTarget;
 		while(related){
-			if(related === currentItem) return;
+			if(related === currentPickedItem) return;
 			related = related.parentNode;
 		}
-		currentItem.classList.remove('list__item_pick');
-		currentItem = null;
+		currentPickedItem.classList.remove('list__item_pick');
+		currentPickedItem = null;
 	}
 }, {capture: false});
+mainField.addEventListener('click', {
+	handleEvent(e){
+		
+		if(!currentPickedItem) return;
 
+		if(e.target === currentActiveItem) return;
+
+		let target = e.target;
+		console.log(e.target);
+		console.log(currentActiveItem);
+		
+		currentActiveItem && currentActiveItem.classList.remove('list__item_active');
+		target.classList.add('list__item_active');
+		currentActiveItem = target;
+	}
+},{capture: false});
 
 
 
