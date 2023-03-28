@@ -1,14 +1,14 @@
 import './index.html';
 import './index.scss';
-
 import * as Canvas from './modules/canvas.mjs';
 
-const canvasProperty = Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
+const canvasProp = Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
 
-const mainField = document.querySelector('#mainField');
+const selectItem = document.querySelector('#selectItem');
 let currentPickedItem = null;
 let currentActiveItem = null;
-mainField.addEventListener('mouseover', {
+let currentActiveInstruction = document.getElementById('welcome');
+selectItem.addEventListener('mouseover', {
 	handleEvent(e){
 		
 		if(currentPickedItem) return;
@@ -21,7 +21,7 @@ mainField.addEventListener('mouseover', {
 
 	}
 }, {capture: false});
-mainField.addEventListener('mouseout', {
+selectItem.addEventListener('mouseout', {
 	handleEvent(e){
 		if(!currentPickedItem) return;
 
@@ -34,19 +34,29 @@ mainField.addEventListener('mouseout', {
 		currentPickedItem = null;
 	}
 }, {capture: false});
-mainField.addEventListener('click', {
+selectItem.addEventListener('click', {
 	handleEvent(e){
 		let target = e.target;
 		let item = target.closest('li.list__item');
 		if(!item) return;
-		if(target === currentActiveItem) return;
-
-		currentActiveItem && currentActiveItem.classList.remove('list__item_active');
-		target.classList.add('list__item_active');
-		currentActiveItem = target;
+		if(item === currentActiveItem) return;
+		let id = item.dataset.id; // figure
+		import('./modules/makeActive.mjs')						// выделяет пункт меню
+			.then(function(Active){
+				Active.default(item, currentActiveItem, 'list__item_active');
+				currentActiveItem = item;
+				return import('./modules/showInstruction.mjs'); // показывает инструкцию к выбранному пункту меню
+			}).then(function(Show){
+				let instructionField = Show.default(id, currentActiveInstruction, 'instruction__field_active');
+				currentActiveInstruction = instructionField;
+				return Promise.all([import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`), // промис в виде объекта модуля Options
+									import(`./modules/${id}/${id}.mjs`)										// промис в виде объекта модуля	  Figure						
+				]);
+			}).then(function([Options, Figure]){
+					Figure.draw(canvasProp.ctx, Options.coords);
+			});
 	}
 }, {capture: false});
-
 
 
 
