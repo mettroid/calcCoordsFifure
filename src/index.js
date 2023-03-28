@@ -8,7 +8,6 @@ const canvasProperty = Canvas.create(document.body, 'canvas', 'canvas-work', 'bo
 const mainField = document.querySelector('#mainField');
 let currentPickedItem = null;
 let currentActiveItem = null;
-let bothSameElements = new Array(2);
 mainField.addEventListener('mouseover', {
 	handleEvent(e){
 		
@@ -35,27 +34,18 @@ mainField.addEventListener('mouseout', {
 		currentPickedItem = null;
 	}
 }, {capture: false});
-mainField.onmousedown = mainField.onmouseup = mainField.onclick = function(e){
-		if(e.button !== 0) return;
-		switch(e.type){
-			case 'mousedown':
-				bothSameElements[0] = e.target;
-			break;
-			case 'mouseup':
-				bothSameElements[1] = e.target;
-			break;
-			case 'click':
-				if(!currentPickedItem) return;
-				if(bothSameElements[0] === bothSameElements[1]){
-					if(currentActiveItem === e.target) return;
-					currentActiveItem && currentActiveItem.classList.remove('list__item_active');
-					e.target.classList.add('list__item_active');
-					currentActiveItem = e.target;
-				}
-			break;
-		}
+mainField.addEventListener('click', {
+	handleEvent(e){
+		let target = e.target;
+		let item = target.closest('li.list__item');
+		if(!item) return;
+		if(target === currentActiveItem) return;
 
-};
+		currentActiveItem && currentActiveItem.classList.remove('list__item_active');
+		target.classList.add('list__item_active');
+		currentActiveItem = target;
+	}
+}, {capture: false});
 
 
 
