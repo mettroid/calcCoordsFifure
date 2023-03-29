@@ -1,5 +1,5 @@
-export default function(elem, currentActiveItem, classActive){
-		currentActiveItem && currentActiveItem.classList.remove(classActive);
+export default function(elem, currentElem, classActive){
+		currentElem && currentElem.classList.remove(classActive);
 		elem.classList.add(classActive);
 }
 
