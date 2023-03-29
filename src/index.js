@@ -41,19 +41,21 @@ selectItem.addEventListener('click', {
 		if(!item) return;
 		if(item === currentActiveItem) return;
 		let id = item.dataset.id; // figure
+		let instruction = document.getElementById(id);
 		import('./modules/makeActive.mjs')						// выделяет пункт меню
 			.then(function(Active){
-				Active.default(item, currentActiveItem, 'list__item_active');
-				currentActiveItem = item;
-				return import('./modules/showInstruction.mjs'); // показывает инструкцию к выбранному пункту меню
-			}).then(function(Show){
-				let instructionField = Show.default(id, currentActiveInstruction, 'instruction__field_active');
-				currentActiveInstruction = instructionField;
-				return Promise.all([import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`), // промис в виде объекта модуля Options
-									import(`./modules/${id}/${id}.mjs`)										// промис в виде объекта модуля	  Figure						
-				]);
-			}).then(function([Options, Figure]){
+				Active.default(item, currentActiveItem, 'list__item_active');	
+				Active.default(instruction, currentActiveInstruction, 'instruction__field_active');				
+				(async () => {
+
+					let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
+					let Figure = await import(`./modules/${id}/${id}.mjs`);
+					console.log(Figure);
 					Figure.draw(canvasProp.ctx, Options.coords);
+					
+				})();
+				currentActiveItem = item;
+				currentActiveInstruction = instruction;
 			});
 	}
 }, {capture: false});
