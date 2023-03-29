@@ -8,6 +8,7 @@ const create = function(parent, id, classStyle, classPosition, width, height){
     canvas.classList.add(classStyle, classPosition);
      
     return {
+        canvas,
         ctx: canvas.getContext('2d'),
         id
     }
