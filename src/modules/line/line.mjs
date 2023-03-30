@@ -1,8 +1,9 @@
 const name = 'line';
-export const draw = function(ctx, {x1,y1,x2,y2}){
+export const draw = function(ctx, {point1, point2}){
+    //console.log(...point1);
     ctx.clearRect(0,0,300,300);
     ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(y2, y2);
+    ctx.moveTo(...point1);
+    ctx.lineTo(...point2);
     ctx.stroke();
 }

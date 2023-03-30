@@ -1,6 +1,4 @@
 export const coords = {
-    x1: 100,
-    y1: 100,
-    x2: 200,
-    y2: 200,
+    point1: [100, 100],
+    point2: [200, 200]
 }
