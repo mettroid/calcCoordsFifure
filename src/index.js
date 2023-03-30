@@ -8,6 +8,19 @@ const selectItem = document.querySelector('#selectItem');
 let currentPickedItem = null;
 let currentActiveItem = null;
 let currentActiveInstruction = document.getElementById('welcome');
+
+canvasProp.canvas.addEventListener('mousedown', {
+	handleEvent(e){
+		if(!currentActiveItem) return;
+
+		(async()=>{
+			
+			let Point = await import('./modules/point.mjs');
+
+		})();
+		
+	}
+});
 selectItem.addEventListener('mouseover', {
 	handleEvent(e){
 		
@@ -50,8 +63,10 @@ selectItem.addEventListener('click', {
 
 					let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
-					console.log(Figure);
+					let Point = await import(`./modules/point.mjs`);
+					console.log(Point);
 					Figure.draw(canvasProp.ctx, Options.coords);
+					Point.draw(canvasProp.ctx, Options.coords);
 					
 				})();
 				currentActiveItem = item;
