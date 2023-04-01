@@ -64,7 +64,6 @@ selectItem.addEventListener('click', {
 					let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
 					let Point = await import(`./modules/point.mjs`);
-					console.log(Point);
 					Figure.draw(canvasProp.ctx, Options.coords);
 					Point.draw(canvasProp.ctx, Options.coords);
 					
