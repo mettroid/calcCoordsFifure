@@ -1,7 +1,11 @@
+import * as NormalizeCoords from './normalizeCoords.mjs';
+import {inRange} from 'lodash';
 const draw = function(ctx, coords){ //нам нужны x и y , больше ничего
     let x, y;
+    NormalizeCoords.coords.length && (NormalizeCoords.coords.length = 0);
     for(let pairCoords of generator(coords)){ 
         if(pairCoords){
+            NormalizeCoords.coords.push(pairCoords);
             ctx.beginPath();
             ctx.fillStyle = 'red';
             ctx.arc(pairCoords[0],pairCoords[1],5, 0,Math.PI*2);
@@ -9,7 +13,16 @@ const draw = function(ctx, coords){ //нам нужны x и y , больше н
         }
     }
 }
-const onPoint = function(coords){
+const onPoint = function(offsetX, offsetY, mouseX, mouseY, arr){ //проверим попали ли мы при клике на красную точку
+    for(let i = 0; i < arr.length; i++){
+        let [x, y] = arr[i];
+        let resultX = inRange(mouseX - offsetX, x - 5, x + 5);
+        let resultY = inRange(mouseY - offsetY, y - 5, y + 5);
+        if(resultX && resultY){
+            return true;
+        }
+    }
+    return false;
 
 }
 function * generator(obj){ // тут мы должны находить крайние точки фигур для их отрисовки
@@ -40,4 +53,4 @@ function * generator(obj){ // тут мы должны находить край
     }
 }
 
-export {draw}
+export {draw, onPoint}
