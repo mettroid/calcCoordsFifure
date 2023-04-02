@@ -12,15 +12,22 @@ let currentActiveInstruction = document.getElementById('welcome');
 canvasProp.canvas.addEventListener('mousedown', {
 	handleEvent(e){
 		if(!currentActiveItem) return;
+		console.log(currentActiveItem);
+		let id = currentActiveItem.dataset.id;
 
 		(async()=>{
-			
 			let Point = await import('./modules/point.mjs');
-
+			let normCoords = await import('./modules/normalizeCoords.mjs');
+			let bool = Point.onPoint(canvasProp.offsetX, canvasProp.offsetY, e.pageX, e.pageY, normCoords.coords); // проверим клик был по точке координат?
+			if(bool){
+				let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
+				let Figure = await import(`./modules/${id}/${id}.mjs`);
+				console.log(bool);
+			}
 		})();
 		
 	}
-});
+}, {capture: false});
 selectItem.addEventListener('mouseover', {
 	handleEvent(e){
 		
