@@ -1,5 +1,5 @@
 const name = 'qudraticQurveTo';
-export const draw = function(ctx, {point1, point2, point3}){
+const draw = function(ctx, {point1, point2, point3}){
     ctx.clearRect(0,0,300,300);
     ctx.beginPath();
     ctx.lineWidth = 2;
@@ -8,3 +8,4 @@ export const draw = function(ctx, {point1, point2, point3}){
     ctx.stroke();
 
 }
+export {name, draw}

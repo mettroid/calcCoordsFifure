@@ -1,5 +1,5 @@
 const name = 'arcTo';
-export const draw = function(ctx, {point1, point2, point3, radius}){
+const draw = function(ctx, {point1, point2, point3, radius}){
     ctx.clearRect(0,0,300,300);
     ctx.beginPath();
     ctx.lineWidth = 2;
@@ -7,3 +7,4 @@ export const draw = function(ctx, {point1, point2, point3, radius}){
     ctx.arcTo(...point2,...point3,radius);
     ctx.stroke();
 }
+export {name, draw}
