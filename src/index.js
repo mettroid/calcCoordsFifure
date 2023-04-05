@@ -26,8 +26,10 @@ canvasProp.canvas.addEventListener('mousedown', {
 				
 					(async()=>{
 						let Calc = await import(`./modules/calc.mjs`);
+						if( Figure.name === 'rect' || 
+							Figure.name === 'arc' ){ //проходит только для определённых фигур
 							Calc[Figure.name](key, e.pageX, e.pageY, canvasProp.offsetX, canvasProp.offsetY, Options.coords);
-
+						}
 						Options.coords[key][0] = e.pageX - canvasProp.offsetX;	//изменили координаты активной точки по X
 						Options.coords[key][1] = e.pageY - canvasProp.offsetY;	//изменили координаты активной точки по Y
 						Figure.draw(canvasProp.ctx, Options.coords);
