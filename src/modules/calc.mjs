@@ -8,4 +8,9 @@ const rect = function(key, mouseX, mouseY, offsetX, offsetY, coords){
             coords.size[1] = coords.point2[1] - (mouseY - offsetY);
         }   
 }
-export {rect}
+const arc = function(key, mouseX, mouseY, offsetX, offsetY, coords){
+        if(key === 'pointR'){
+            coords.radius = Math.max((mouseX - offsetX) - coords.point1[0], (mouseY - offsetY) - coords.point1[1]);
+        }
+}
+export {rect, arc}
