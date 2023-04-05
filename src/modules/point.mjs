@@ -23,25 +23,25 @@ const onPoint = function(offsetX, offsetY, mouseX, mouseY, obj){ //провер�
     return null;
 
 }
-function addPoints(coordsFigure){ //обычный объект с размерами и координатами фигуры
+function addPoints(coordsFigure, figure){ //обычный объект с размерами и координатами фигуры
    let x, y;
-   for(let key in coordsFigure){
-     switch(key){
-        case 'size':
+     switch(figure){
+        case ('rect'):
             if('point2' in coordsFigure) return;
-             x = coordsFigure[key][0] + coordsFigure.point1[0];
-             y = coordsFigure[key][1] + coordsFigure.point1[1];
+             x = coordsFigure.size[0] + coordsFigure.point1[0];
+             y = coordsFigure.size[1] + coordsFigure.point1[1];
              coordsFigure.point2 = [x, y];
         break;
-        case 'radius':
-            if('point3' in coordsFigure) return;
+        case ('arc'):
             if('pointR' in coordsFigure) return;
-            x = coordsFigure[key] + coordsFigure.point1[0];
-            y = coordsFigure.point1[1];
+            x = coordsFigure.radius + coordsFigure.point1[0]; //радиус + x
+            y = coordsFigure.point1[1];  // y
             coordsFigure.pointR = [x, y]; 
         break;
+        case ('arcTo'):
+        break;
      }
-   }
+   
 }
 
 export {addPoints, draw, onPoint}

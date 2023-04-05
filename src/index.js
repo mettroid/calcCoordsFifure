@@ -89,7 +89,7 @@ selectItem.addEventListener('click', {
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
 					let Point = await import(`./modules/point.mjs`);
 					
-					Point.addPoints(Options.coords);
+					Point.addPoints(Options.coords, id);
 					Figure.draw(canvasProp.ctx, Options.coords);
 					Point.draw(canvasProp.ctx, Options.coords);
 					
