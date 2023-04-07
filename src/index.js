@@ -40,6 +40,10 @@ canvasProp.canvas.addEventListener('mousedown', {
 			canvasProp.canvas.addEventListener('mousemove', move);
 			canvasProp.canvas.addEventListener('mouseup', ()=>{
 				canvasProp.canvas.removeEventListener('mousemove', move);
+				import('./modules/calc.mjs')
+					.then((Calc)=>{
+						Calc.clear();
+					});
 			});
 		})();
 		
