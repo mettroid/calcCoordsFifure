@@ -1,6 +1,8 @@
 import './index.html';
 import './index.scss';
+import * as Point from './modules/point.mjs';
 import * as Canvas from './modules/canvas.mjs';
+import * as Calc from './modules/calc.mjs';
 
 const canvasProp = Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
 
@@ -16,7 +18,6 @@ canvasProp.canvas.addEventListener('mousedown', {
 		let id = currentActiveItem.dataset.id;
 
 		(async()=>{
-			let Point = await import('./modules/point.mjs');
 			let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 			let key = Point.onPoint(canvasProp.offsetX, canvasProp.offsetY, e.pageX, e.pageY, Options.coords); // проверим клик был по точке координат?
 			if(key === null) return;
@@ -25,7 +26,6 @@ canvasProp.canvas.addEventListener('mousedown', {
 			function move(e){
 				
 					(async()=>{
-						let Calc = await import(`./modules/calc.mjs`);
 						if( Figure.name === 'rect' || 
 							Figure.name === 'arc' ){ //проходит только для определённых фигур
 							Calc[Figure.name](key, e.pageX, e.pageY, canvasProp.offsetX, canvasProp.offsetY, Options.coords);
@@ -40,10 +40,7 @@ canvasProp.canvas.addEventListener('mousedown', {
 			canvasProp.canvas.addEventListener('mousemove', move);
 			canvasProp.canvas.addEventListener('mouseup', ()=>{
 				canvasProp.canvas.removeEventListener('mousemove', move);
-				import('./modules/calc.mjs')
-					.then((Calc)=>{
 						Calc.clear();
-					});
 			});
 		})();
 		
@@ -91,7 +88,6 @@ selectItem.addEventListener('click', {
 
 					let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
-					let Point = await import(`./modules/point.mjs`);
 					
 					Point.addPoints(Options.coords, id);
 					Figure.draw(canvasProp.ctx, Options.coords);
