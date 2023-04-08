@@ -14,7 +14,6 @@ let currentActiveInstruction = document.getElementById('welcome');
 canvasProp.canvas.addEventListener('mousedown', {
 	handleEvent(e){
 		if(!currentActiveItem) return;
-		console.log(currentActiveItem);
 		let id = currentActiveItem.dataset.id;
 
 		(async()=>{
@@ -40,7 +39,17 @@ canvasProp.canvas.addEventListener('mousedown', {
 			canvasProp.canvas.addEventListener('mousemove', move);
 			canvasProp.canvas.addEventListener('mouseup', ()=>{
 				canvasProp.canvas.removeEventListener('mousemove', move);
-						Calc.clear();
+				Calc.clear();
+				let instruction = document.getElementById(id);
+				if(!instruction.querySelector('p.coords-figure')){
+					let coords = document.createElement('p');
+					coords.classList.add('coords-figure');
+					instruction.insertAdjacentElement('beforeEnd', coords);
+				}
+				/*let coords = instruction.querySelector('p.coords-figure');
+				let str = `${Options.coords}`.replace(/(?<=;)\s+/g, '\n');
+				console.log(str);
+				coords.innerHTML = str;*/
 			});
 		})();
 		
