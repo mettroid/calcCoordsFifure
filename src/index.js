@@ -15,7 +15,6 @@ canvasProp.canvas.addEventListener('mousedown', {
 	handleEvent(e){
 		if(!currentActiveItem) return;
 		let id = currentActiveItem.dataset.id;
-
 		(async()=>{
 			let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 			let key = Point.onPoint(canvasProp.offsetX, canvasProp.offsetY, e.pageX, e.pageY, Options.coords); // проверим клик был по точке координат?
@@ -37,23 +36,24 @@ canvasProp.canvas.addEventListener('mousedown', {
 
 			}
 			canvasProp.canvas.addEventListener('mousemove', move);
-			canvasProp.canvas.addEventListener('mouseup', ()=>{
-				canvasProp.canvas.removeEventListener('mousemove', move);
-				Calc.clear();
-				let instruction = document.getElementById(id);
-				if(!instruction.querySelector('p.coords-figure')){
-					let coords = document.createElement('p');
-					coords.classList.add('coords-figure');
-					instruction.insertAdjacentElement('beforeEnd', coords);
+			canvasProp.canvas.addEventListener('mouseup', {
+				handleEvent(){
+					canvasProp.canvas.removeEventListener('mousemove', move);
+					Calc.clear();
+					let instruction = document.getElementById(id);
+					console.log('instruction');
+					if(!(instruction.querySelector('p.coords-figure'))){
+						let coords = document.createElement('p');
+						coords.classList.add('coords-figure');
+						instruction.insertAdjacentElement('beforeEnd', coords);
+					}
+					let coords = instruction.querySelector('p.coords-figure');
+					let str = `${Options.coords}`.replace(/(?<!;)\n/g, '');
+					coords.innerHTML = str;
 				}
-				/*let coords = instruction.querySelector('p.coords-figure');
-				let str = `${Options.coords}`.replace(/(?<=;)\s+/g, '\n');
-				console.log(str);
-				coords.innerHTML = str;*/
-			});
+			}, {once: true});
 		})();
-		
-	}
+	}	
 }, {capture: false});
 selectItem.addEventListener('mouseover', {
 	handleEvent(e){
