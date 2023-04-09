@@ -18,7 +18,7 @@ const arc = function(key, mouseX, mouseY, offsetX, offsetY, coords){
         if(key.startsWith('pointR')){
                 setRadius(mouseX, mouseY, offsetX, offsetY, coords);
                 let {a, b, c} = getSides(mouseX, mouseY, offsetX, offsetY, coords);
-                setDeg(a, b, coords, key);
+                setRadians(a, b, coords, key);
                 if(key === 'pointR1'){
                         setAdjacentPoint('pointR2', coords);
                 } else if(key === 'pointR2'){
@@ -38,31 +38,31 @@ const arc = function(key, mouseX, mouseY, offsetX, offsetY, coords){
             coords.pointR2[1] = normY + diffy2;
         }
 }
-const setDeg = function(a, b, coords, key){
+const setRadians = function(a, b, coords, key){
         let tg = 0;
-        let rad = 0;
+        let radian = 0;
         if(a > 0 && b > 0){ // если мы в первой четверти круга radian (0 - 1.57)
                 tg = b / a;
-                rad = 0;
+                radian = 0;
         } 
         if(a <= 0 && b > 0){ // если мы во второй четверти круга (1.57 - 3.14)
                 tg = Math.abs(a) / b;
-                rad = Math.PI * 0.5;
+                radian = Math.PI * 0.5;
         }
         if(a <= 0 && b <= 0){ // если мы в третьей черверти круга (3.14 - 4.71)
                 tg = b / a;
-                rad = Math.PI;
+                radian = Math.PI;
         }
         if(a >= 0 && b <= 0){ // если му в четвёртой четверти круга (4.71 - 6.28)
-            tg = a / Math.abs(b);
-            rad = Math.PI * 1.5;
+                tg = a / Math.abs(b);
+                radian = Math.PI * 1.5;
         }
-        key === 'pointR1'? (coords.degs[0] = Math.atan(tg) + rad) : 
-                           (coords.degs[1] = Math.atan(tg) + rad);
+        key === 'pointR1'? (coords.radians[0] = Math.atan(tg) + radian) : 
+                           (coords.radians[1] = Math.atan(tg) + radian);
 }
 const setRadius = function(mouseX, mouseY, offsetX, offsetY, coords){
                         let {c} = getSides(mouseX, mouseY, offsetX, offsetY, coords); // вернуть гипотенузу это и будет радиус
-                        coords.radius = c;
+                        coords.radius = c.toFixed(2);
 }
 const getSides = function(mouseX, mouseY, offsetX, offsetY, coords){
         let a = (mouseX - offsetX) - coords.point1[0]; // катет a прямоугольного треугольника относительно центра круга
@@ -91,5 +91,8 @@ const setSinCos = function(point, coords){
                 cosA = a / c;  
         } 
 }
+const getDegrees = function(radian){
+        return Math.round(180 / Math.PI * radian);
+}
 
-export {rect, arc, clear}
+export {rect, arc, clear, getDegrees}
