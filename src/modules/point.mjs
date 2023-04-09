@@ -35,10 +35,10 @@ function addPoints(coordsFigure, figure){ //обычный объект с ра�
         case ('arc'):
             if('pointR1' in coordsFigure && 
                'pointR2' in coordsFigure) return;
-            x = coordsFigure.radius + coordsFigure.point1[0]; //радиус + x
-            y = coordsFigure.point1[1];  // y
-            coordsFigure.pointR1 = [x, y];
-            coordsFigure.pointR2 = [x, y] 
+                x = coordsFigure.radius + coordsFigure.point1[0]; //радиус + x
+                y = coordsFigure.point1[1];  // y
+                coordsFigure.pointR1 = [x, y];
+                coordsFigure.pointR2 = [x, y] 
         break;
         case ('arcTo'):
         break;
