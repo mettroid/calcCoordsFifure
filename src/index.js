@@ -41,13 +41,15 @@ canvasProp.canvas.addEventListener('mousedown', {
 					canvasProp.canvas.removeEventListener('mousemove', move);
 					Calc.clear();
 					let instruction = document.getElementById(id);
-					console.log('instruction');
-					if(!(instruction.querySelector('p.coords-figure'))){
-						let coords = document.createElement('p');
-						coords.classList.add('coords-figure');
-						instruction.insertAdjacentElement('beforeEnd', coords);
+					if(!(instruction.querySelector('div.finalCoords'))){
+						let blockCoords = document.createElement('div');
+						let textCoords = document.createElement('p');
+						textCoords.classList.add('finalCoords__text');
+						blockCoords.classList.add('finalCoords');
+						blockCoords.append(textCoords);
+						instruction.insertAdjacentElement('beforeEnd', blockCoords);
 					}
-					let coords = instruction.querySelector('p.coords-figure');
+					let coords = instruction.querySelector('.finalCoords__text');
 					let str = `${Options.coords}`.replace(/(?<!;)\n/g, '');
 					coords.innerHTML = str;
 				}
