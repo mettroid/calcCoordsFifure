@@ -1,0 +1,16 @@
+@media (max-width: 500px) {
+    .body {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .elector-of-coordinates {
+        width: 100%;
+        box-shadow: none;
+    }
+    .canvas-work {
+        width: 100%;
+    }
+}
+@media (min-width: 500px) and (max-width: 920px) {
+    
+}
