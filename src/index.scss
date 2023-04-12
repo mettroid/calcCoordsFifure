@@ -2,6 +2,7 @@
 @import 'style/var2.scss';
 @import 'style/style.scss';
 @import 'style/fonts.scss';
+@import 'style/normalize.scss';
 @import 'style/common.blocks/html/html.scss';
 @import 'style/common.blocks/body/body.scss';
 @import 'style/common.blocks/body/__elector-of-coordinates/body__elector-of-coordinates.scss';
@@ -34,7 +35,10 @@
 @import 'style/common.blocks/instruction/__before/instruction__before.scss';
 
 @import 'style/common.blocks/finalCoords/finalCoords.scss';
-@import 'style/common.blocks/finalCoords/__text/finalCoords__text.scss'
+@import 'style/common.blocks/finalCoords/__text/finalCoords__text.scss';
+
+@import 'style/wievport.scss';
+
 
 
 
