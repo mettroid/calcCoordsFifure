@@ -3,21 +3,18 @@ import './index.scss';
 import * as Point from './modules/point.mjs';
 import * as Canvas from './modules/canvas.mjs';
 import * as Calc from './modules/calc.mjs';
+import {currElement} from './modules/elements.mjs';
 
-const canvasProp = Canvas.create(document.body, 'canvas', 'canvas-work', 'body__canvas-work', 300, 300);//создали канвас
-
+Canvas.create(document.querySelector('.body'), 'canvas', 'canvas-work', 'body__canvas-work');//создали канвас
 const selectItem = document.querySelector('#selectItem');
-let currentPickedItem = null;
-let currentActiveItem = null;
-let currentActiveInstruction = document.getElementById('welcome');
 
-canvasProp.canvas.addEventListener('mousedown', {
+Canvas.opt.canvas.addEventListener('mousedown', {
 	handleEvent(e){
-		if(!currentActiveItem) return;
-		let id = currentActiveItem.dataset.id;
+		if(!currElement.activeItem) return;
+		let id = currElement.activeItem.dataset.id;
 		(async()=>{
-			let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
-			let key = Point.onPoint(canvasProp.offsetX, canvasProp.offsetY, e.pageX, e.pageY, Options.coords); // проверим клик был по точке координат?
+			let Coords = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
+			let key = Point.onPoint(Canvas.opt.offsetX, Canvas.opt.offsetY, e.pageX, e.pageY, Coords.opt); // проверим клик был по точке координат?
 			if(key === null) return;
 
 			let Figure = await import(`./modules/${id}/${id}.mjs`);
@@ -26,19 +23,19 @@ canvasProp.canvas.addEventListener('mousedown', {
 					(async()=>{
 						if( Figure.name === 'rect' || 
 							Figure.name === 'arc' ){ //проходит только для определённых фигур
-							Calc[Figure.name](key, e.pageX, e.pageY, canvasProp.offsetX, canvasProp.offsetY, Options.coords);
+							Calc[Figure.name](key, e.pageX, e.pageY, Canvas.opt.offsetX, Canvas.opt.offsetY, Coords.opt);
 						}
-						Options.coords[key][0] = e.pageX - canvasProp.offsetX;	//изменили координаты активной точки по X
-						Options.coords[key][1] = e.pageY - canvasProp.offsetY;	//изменили координаты активной точки по Y
-						Figure.draw(canvasProp.ctx, Options.coords);
-						Point.draw(canvasProp.ctx, Options.coords);
+						Coords.opt[key][0] = e.pageX - Canvas.opt.offsetX;	//изменили координаты активной точки по X
+						Coords.opt[key][1] = e.pageY - Canvas.opt.offsetY;	//изменили координаты активной точки по Y
+						Figure.draw(Canvas.opt.ctx, Canvas.opt.canvas, Coords.opt);
+						Point.draw(Canvas.opt.ctx, Coords.opt);
 					})();
 
 			}
-			canvasProp.canvas.addEventListener('mousemove', move);
-			canvasProp.canvas.addEventListener('mouseup', {
+			Canvas.opt.canvas.addEventListener('mousemove', move);
+			Canvas.opt.canvas.addEventListener('mouseup', {
 				handleEvent(){
-					canvasProp.canvas.removeEventListener('mousemove', move);
+					Canvas.opt.canvas.removeEventListener('mousemove', move);
 					Calc.clear();
 					let instruction = document.getElementById(id);
 					if(!(instruction.querySelector('div.finalCoords'))){
@@ -50,7 +47,7 @@ canvasProp.canvas.addEventListener('mousedown', {
 						instruction.insertAdjacentElement('beforeEnd', blockCoords);
 					}
 					let coords = instruction.querySelector('.finalCoords__text');
-					let str = `${Options.coords}`.replace(/(?<!;)\n/g, '');
+					let str = `${Coords.opt}`.replace(/(?<!;)\n/g, '');
 					coords.innerHTML = str;
 				}
 			}, {once: true});
@@ -60,27 +57,27 @@ canvasProp.canvas.addEventListener('mousedown', {
 selectItem.addEventListener('mouseover', {
 	handleEvent(e){
 		
-		if(currentPickedItem) return;
+		if(currElement.pickedItem) return;
 		let item = e.target.closest('li.list__item');
 		if(!item) return;
-		if(currentActiveItem === item) return;
+		if(currElement.activeItem === item) return;
 
 		item.classList.add('list__item_pick');
-		currentPickedItem = item;
+		currElement.pickedItem = item;
 
 	}
 }, {capture: false});
 selectItem.addEventListener('mouseout', {
 	handleEvent(e){
-		if(!currentPickedItem) return;
+		if(!currElement.pickedItem) return;
 
 		let related = e.relatedTarget;
 		while(related){
-			if(related === currentPickedItem) return;
+			if(related === currElement.pickedItem) return;
 			related = related.parentNode;
 		}
-		currentPickedItem.classList.remove('list__item_pick');
-		currentPickedItem = null;
+		currElement.pickedItem.classList.remove('list__item_pick');
+		currElement.pickedItem = null;
 	}
 }, {capture: false});
 selectItem.addEventListener('click', {
@@ -88,25 +85,26 @@ selectItem.addEventListener('click', {
 		let target = e.target;
 		let item = target.closest('li.list__item');
 		if(!item) return;
-		if(item === currentActiveItem) return;
+		if(item === currElement.activeItem) return;
 		let id = item.dataset.id; // figure
 		let instruction = document.getElementById(id);
 		import('./modules/makeActive.mjs')						// выделяет пункт меню
 			.then(function(Active){
-				Active.default(item, currentActiveItem, 'list__item_active');	
-				Active.default(instruction, currentActiveInstruction, 'instruction__field_active');				
+				Active.default(item, currElement.activeItem, 'list__item_active');	
+				Active.default(instruction, currElement.activeInstruction, 'instruction__field_active');				
 				(async () => {
 
-					let Options = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
+					let Coords = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
 					
-					Point.addPoints(Options.coords, id);
-					Figure.draw(canvasProp.ctx, Options.coords);
-					Point.draw(canvasProp.ctx, Options.coords);
+					Point.addPoints(Coords.opt, id);
+
+					Figure.draw(Canvas.opt.ctx, Canvas.opt.canvas, Coords.opt);
+					Point.draw(Canvas.opt.ctx, Coords.opt);
 					
 				})();
-				currentActiveItem = item;
-				currentActiveInstruction = instruction;
+				currElement.activeItem = item;
+				currElement.activeInstruction = instruction;
 			});
 	}
 }, {capture: false});

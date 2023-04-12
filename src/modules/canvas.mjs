@@ -1,19 +1,21 @@
-const create = function(parent, id, classStyle, classPosition, width, height){
+import * as Resize from './optimizerResize.mjs';
+let opt = {};
+const create = function(parent, id, classStyle, classPosition){
     let canvas = document.createElement('canvas');
-    parent.insertAdjacentElement('beforeEnd', canvas);
-
-    canvas.width = width;
-    canvas.height = height;
+    parent.insertAdjacentElement('afterBegin', canvas);
+    let ctx = canvas.getContext('2d');
     canvas.id = id;
+    Resize.resizeCanvas(ctx, canvas);
     canvas.classList.add(classStyle, classPosition);
-    
     let coords = canvas.getBoundingClientRect();
-    return {
+ 
+    opt = {
         id,
         canvas,
-        ctx: canvas.getContext('2d'),
+        ctx,
         offsetX: coords.x + window.pageXOffset,
         offsetY: coords.y + window.pageYOffset
     }
 }
-export {create}
+
+export {create, opt}

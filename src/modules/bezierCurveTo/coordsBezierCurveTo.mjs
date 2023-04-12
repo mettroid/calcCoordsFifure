@@ -1,4 +1,4 @@
-export const coords = {
+export const opt = {
     point1: [50, 50],
     point2: [100, 50],
     point3: [200, 50],

@@ -1,4 +1,4 @@
-export const coords = {
+export const opt = {
     point1: [100, 100],
     point2: [200, 200],
     toString(){
