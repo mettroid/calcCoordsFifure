@@ -3,9 +3,13 @@ import './index.scss';
 import * as Point from './modules/point.mjs';
 import * as Canvas from './modules/canvas.mjs';
 import * as Calc from './modules/calc.mjs';
+import * as Resize from './modules/optimizerResize.mjs';
 import {currElement} from './modules/elements.mjs';
 
+
 Canvas.create(document.querySelector('.body'), 'canvas', 'canvas-work', 'body__canvas-work');//создали канвас
+Resize.resizeElems();
+
 const selectItem = document.querySelector('#selectItem');
 
 Canvas.opt.canvas.addEventListener('mousedown', {
