@@ -7,7 +7,8 @@ const opt = {
         this.radius = Math.round(this.radius);
         let degrees1 = getDegrees(this.radians[0]);
         let degrees2 = getDegrees(this.radians[1]);
-        return `ctx.arc(${this.point1[0]},${this.point1[1]},
+        return `ctx.moveTo(${this.point1[0]},${this.point1[1]});
+                ctx.arc(${this.point1[0]},${this.point1[1]},
                         ${this.radius},
                         Math.PI/180*${degrees1},
                         Math.PI/180*${degrees2});`;
