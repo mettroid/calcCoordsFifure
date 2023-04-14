@@ -13,29 +13,29 @@ const resizeElems = function(){
         }
     }
     function resizeAt(){
-        let body = document.querySelector('.body');
+        let wrapper = document.querySelector('.wrapper');
         let menu = document.querySelector('.elector-of-coordinates');
-        if(body.clientWidth <= 500){
-            body.style.padding = 0;
-            Canvas.opt.canvas.width = body.clientWidth;
+        if(wrapper.clientWidth <= 500){
+            wrapper.style.padding = 0;
+            Canvas.opt.canvas.width = wrapper.clientWidth;
             Canvas.opt.canvas.height = 500;  
             Canvas.opt.canvas.style.float = 'left';
             menu.style.width = 100 + "%";
             menu.style.height = 100 + "%";
             menu.style.float = 'left';
         }
-        if(body.clientWidth >= 500 && body.clientWidth <= 1200){
-            body.style.padding = '5px';
-            Canvas.opt.canvas.width = body.clientWidth - 10;
+        if(wrapper.clientWidth >= 500 && wrapper.clientWidth <= 1200){
+            wrapper.style.padding = '5px';
+            Canvas.opt.canvas.width = wrapper.clientWidth - 10;
             Canvas.opt.canvas.height = 700;  
             Canvas.opt.canvas.style.float = 'left';
             menu.style.width = '500px';
             menu.style.height = '100%';
             menu.style.float = 'left';
         }
-        if(body.clientWidth >= 1200){
-            body.style.padding = '10px';
-            Canvas.opt.canvas.width = body.clientWidth * 0.68;
+        if(wrapper.clientWidth >= 1200){
+            wrapper.style.padding = '10px';
+            Canvas.opt.canvas.width = wrapper.clientWidth * 0.68;
             Canvas.opt.canvas.height = 700; 
             Canvas.opt.canvas.style.float = 'left'; 
             menu.style.width = 30 + "%";

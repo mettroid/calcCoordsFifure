@@ -7,7 +7,7 @@ import * as Resize from './modules/optimizerResize.mjs';
 import {currElement} from './modules/elements.mjs';
 
 
-Canvas.create(document.querySelector('.body'), 'canvas', 'canvas-work', 'body__canvas-work');//создали канвас
+Canvas.create(document.querySelector('.wrapper'), 'canvas', 'canvas-work', 'wrapper__canvas-work');//создали канвас
 Resize.resizeElems();
 
 const selectItem = document.querySelector('#selectItem');

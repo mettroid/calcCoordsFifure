@@ -4,10 +4,10 @@
 @import 'style/fonts.scss';
 @import 'style/normalize.scss';
 @import 'style/common.blocks/html/html.scss';
-@import 'style/common.blocks/body/body.scss';
-@import 'style/common.blocks/body/__elector-of-coordinates/body__elector-of-coordinates.scss';
-@import 'style/common.blocks/body/__instruction/body__instruction.scss';
-@import 'style/common.blocks/body/__canvas-work/body__canvas-work.scss';
+@import 'style/common.blocks/wrapper/wrapper.scss';
+@import 'style/common.blocks/wrapper/__elector-of-coordinates/wrapper__elector-of-coordinates.scss';
+@import 'style/common.blocks/wrapper/__instruction/wrapper__instruction.scss';
+@import 'style/common.blocks/wrapper/__canvas-work/wrapper__canvas-work.scss';
 
 @import 'style/common.blocks/canvas-work/canvas-work.scss';
 
