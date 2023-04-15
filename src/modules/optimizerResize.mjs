@@ -1,6 +1,7 @@
 import {currElement} from './elements.mjs';
 import * as Canvas from './canvas.mjs';
 import * as Point from './point.mjs';
+import * as Marking from './markingCoords.mjs';
 
 const resizeElems = function(){
     window.addEventListener('DOMContentLoaded', resize);

@@ -4,6 +4,7 @@ import * as Point from './modules/point.mjs';
 import * as Canvas from './modules/canvas.mjs';
 import * as Calc from './modules/calc.mjs';
 import * as Resize from './modules/optimizerResize.mjs';
+import * as Marking from './modules/markingCoords.mjs';
 import {currElement} from './modules/elements.mjs';
 
 
@@ -31,7 +32,8 @@ Canvas.opt.canvas.addEventListener('mousedown', {
 						}
 						Coords.opt[key][0] = e.pageX - Canvas.opt.offsetX;	//изменили координаты активной точки по X
 						Coords.opt[key][1] = e.pageY - Canvas.opt.offsetY;	//изменили координаты активной точки по Y
-						Figure.draw(Canvas.opt.ctx, Canvas.opt.canvas, Coords.opt);
+						Marking.draw(Canvas.opt);
+						Figure.draw(Canvas.opt.ctx, Coords.opt);
 						Point.draw(Canvas.opt.ctx, Coords.opt);
 					})();
 
@@ -100,10 +102,10 @@ selectItem.addEventListener('click', {
 
 					let Coords = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
-					
+					Marking.draw(Canvas.opt);
 					Point.addPoints(Coords.opt, id);
-
-					Figure.draw(Canvas.opt.ctx, Canvas.opt.canvas, Coords.opt);
+					
+					Figure.draw(Canvas.opt.ctx, Coords.opt);
 					Point.draw(Canvas.opt.ctx, Coords.opt);
 					
 				})();
