@@ -1,6 +1,5 @@
 const name = 'bezierCurveTo';
-const draw = function(ctx, canvas, {point1, point2, point3, point4}){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+const draw = function(ctx, {point1, point2, point3, point4}){
     ctx.beginPath();
     ctx.moveTo(...point1);
     ctx.bezierCurveTo(...point2,...point3,...point4);

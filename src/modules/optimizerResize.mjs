@@ -53,7 +53,8 @@ const resizeElems = function(){
         (async()=>{
             let Coords = await import(`./${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
             let Figure = await import(`./${id}/${id}.mjs`);
-            Figure.draw(Canvas.opt.ctx, Canvas.opt.canvas, Coords.opt);
+            Marking.draw(Canvas.opt);
+            Figure.draw(Canvas.opt.ctx, Coords.opt);
             Point.draw(Canvas.opt.ctx, Coords.opt);
         })();
     }

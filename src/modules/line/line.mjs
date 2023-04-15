@@ -1,6 +1,5 @@
 const name = 'line';
-const draw = function(ctx, canvas, {point1, point2}){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+const draw = function(ctx, {point1, point2}){
     ctx.beginPath();
     ctx.moveTo(...point1);
     ctx.lineTo(...point2);
