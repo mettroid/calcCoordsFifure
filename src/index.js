@@ -26,6 +26,8 @@ Canvas.opt.canvas.addEventListener('mousedown', {
 			function move(e){
 				
 					(async()=>{
+						if((e.pageX - Canvas.opt.offsetX < 0 || e.pageX - Canvas.opt.offsetX  > Canvas.opt.canvas.width-40) ||
+						   (e.pageY - Canvas.opt.offsetY < 0 || e.pageY - Canvas.opt.offsetY  > Canvas.opt.canvas.height-40)) return;
 						if( Figure.name === 'rect' || 
 							Figure.name === 'arc' ){ //проходит только для определённых фигур
 							Calc[Figure.name](key, e.pageX, e.pageY, Canvas.opt.offsetX, Canvas.opt.offsetY, Coords.opt);
