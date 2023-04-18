@@ -13,8 +13,8 @@ let changeOffsetXY = function(){
     let coords = opt.canvas.getBoundingClientRect();
     if(coords.x == opt.offsetX &&
        coords.y == opt.offsetY) return;
-       opt.offsetX = coords.x + window.pageXOffset,
-       opt.offsetY = coords.y + window.pageYOffset
+       opt.offsetX = Math.round(coords.x + window.pageXOffset + 20),
+       opt.offsetY = Math.round(coords.y + window.pageYOffset + 20)
 
 
 }
