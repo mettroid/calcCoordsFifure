@@ -4,7 +4,7 @@ const draw = function(ctx, coordsPoint){ //нам нужны x и y , больш
             if(key.startsWith('point')){
                 ctx.beginPath();
                 ctx.fillStyle = 'red';
-                ctx.arc(arr[0],arr[1],5, 0,Math.PI*2);
+                ctx.arc(arr[0] + 20,arr[1] + 20,5, 0,Math.PI*2);
                 ctx.fill();
             }
         }
