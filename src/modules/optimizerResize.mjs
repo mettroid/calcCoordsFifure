@@ -47,6 +47,8 @@ const resizeElems = function(){
             draw();
         }
         Canvas.changeOffsetXY();
+        Marking.drawRuler(Canvas.opt);
+        Marking.drawLines(Canvas.opt);
     }
     function draw(){
         let {activeItem} = currElement;
@@ -54,7 +56,7 @@ const resizeElems = function(){
         (async()=>{
             let Coords = await import(`./${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
             let Figure = await import(`./${id}/${id}.mjs`);
-            Marking.draw(Canvas.opt);
+
             Figure.draw(Canvas.opt.ctx, Coords.opt);
             Point.draw(Canvas.opt.ctx, Coords.opt);
         })();

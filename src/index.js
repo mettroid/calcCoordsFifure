@@ -26,15 +26,18 @@ Canvas.opt.canvas.addEventListener('mousedown', {
 			function move(e){
 				
 					(async()=>{
-						if((e.pageX - Canvas.opt.offsetX < 0 || e.pageX - Canvas.opt.offsetX  > Canvas.opt.canvas.width-40) ||
-						   (e.pageY - Canvas.opt.offsetY < 0 || e.pageY - Canvas.opt.offsetY  > Canvas.opt.canvas.height-40)) return;
+						let diffX = e.pageX - Canvas.opt.offsetX;
+						let diffY = e.pageY - Canvas.opt.offsetY
+						if(( diffX < 0 || diffX  > Canvas.opt.canvas.width-40) ||
+						   ( diffY < 0 || diffY  > Canvas.opt.canvas.height-40)) return;
 						if( Figure.name === 'rect' || 
 							Figure.name === 'arc' ){ //проходит только для определённых фигур
 							Calc[Figure.name](key, e.pageX, e.pageY, Canvas.opt.offsetX, Canvas.opt.offsetY, Coords.opt);
 						}
-						Coords.opt[key][0] = e.pageX - Canvas.opt.offsetX;	//изменили координаты активной точки по X
-						Coords.opt[key][1] = e.pageY - Canvas.opt.offsetY;	//изменили координаты активной точки по Y
-						Marking.draw(Canvas.opt);
+						Coords.opt[key][0] = diffX;	//изменили координаты активной точки по X
+						Coords.opt[key][1] = diffY;	//изменили координаты активной точки по Y
+						Marking.drawRuler(Canvas.opt);
+						Marking.drawLines(Canvas.opt);
 						Figure.draw(Canvas.opt.ctx, Coords.opt);
 						Point.draw(Canvas.opt.ctx, Coords.opt);
 					})();
@@ -104,7 +107,8 @@ selectItem.addEventListener('click', {
 
 					let Coords = await import(`./modules/${id}/coords${id[0].toUpperCase() + id.slice(1)}.mjs`);
 					let Figure = await import(`./modules/${id}/${id}.mjs`);
-					Marking.draw(Canvas.opt);
+					Marking.drawRuler(Canvas.opt);
+					Marking.drawLines(Canvas.opt);
 					Point.addPoints(Coords.opt, id);
 					
 					Figure.draw(Canvas.opt.ctx, Coords.opt);
